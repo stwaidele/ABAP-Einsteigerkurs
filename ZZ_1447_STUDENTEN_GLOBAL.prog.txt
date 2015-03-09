@@ -1,0 +1,63 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_STUDENTEN_GLOBAL
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_studenten_global.
+PARAMETERS pa_absch TYPE ZZ_1447_ST_ABSCHLUSS .
+
+DATA studierende TYPE ZZ_1447_STUD_TAB .
+DATA stud TYPE ZZ1447_STUD .
+
+stud-name = 'Adams' .
+stud-vorname = 'Adele' .
+stud-matrikel = '1234567890' .
+stud-semester = '1' .
+stud-fakultaet = 'Mathematik' .
+stud-abschluss = pa_absch .
+INSERT stud INTO TABLE studierende.
+
+stud-name = 'Buchner' .
+stud-vorname = 'Björn' .
+stud-matrikel = '2345678901' .
+stud-semester = '2' .
+stud-fakultaet = 'Informatik' .
+stud-abschluss = pa_absch .
+INSERT stud INTO TABLE studierende.
+
+stud-name = 'Crubali' .
+stud-vorname = 'Cerno' .
+stud-matrikel = '3456789012' .
+stud-semester = '3' .
+stud-fakultaet = 'Sprachwissenschaft' .
+stud-abschluss = pa_absch .
+INSERT stud INTO TABLE studierende.
+
+stud-name = 'Daum' .
+stud-vorname = 'Doris' .
+stud-matrikel = '4567890123' .
+stud-semester = '4' .
+stud-fakultaet = 'Musik' .
+stud-abschluss = pa_absch .
+INSERT stud INTO TABLE studierende.
+
+stud-name = 'Ernst' .
+stud-vorname = 'Eberhard' .
+stud-matrikel = '5678901234' .
+stud-semester = '5' .
+stud-fakultaet = 'Sport' .
+stud-abschluss = pa_absch .
+INSERT stud INTO TABLE studierende.
+
+LOOP AT studierende INTO stud.
+  WRITE: / 'Nachname: ', stud-name,
+  / 'Vorname: ', stud-vorname,
+   / 'Matrikel-Nr.: ', stud-matrikel,
+   / 'Semester: ', stud-semester,
+   / 'Abschluss: ', stud-abschluss,
+   / 'Fakultät: ', stud-fakultaet,
+   / .
+ENDLOOP.

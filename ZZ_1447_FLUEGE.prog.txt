@@ -1,0 +1,73 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_FLUEGE
+*&
+*&---------------------------------------------------------------------*
+*&
+*&  \|/~
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_fluege MESSAGE-ID zz_1447_messages.
+PARAMETER pa_carr TYPE spfli-carrid.
+
+DATA wa TYPE spfli .
+DATA itab TYPE TABLE OF spfli.
+
+START-OF-SELECTION.
+
+  CALL FUNCTION 'Z_1447_GET_FLUEGE'
+    EXPORTING
+      im_carrid = pa_carr
+    IMPORTING
+      ex_liste  = itab
+    EXCEPTIONS
+      sql_error = 5
+      no_auth   = 7.
+
+  IF sy-subrc = 0.
+    FORMAT COLOR 4.
+    ULINE /(69).
+    WRITE: /'|Verbindung', 15 '|Von', 42 '|Nach', 69 '|'.
+    FORMAT RESET.
+    ULINE /(69).
+    LOOP AT itab INTO wa.
+      WRITE: / '|', wa-carrid, wa-connid, 15 '|', wa-countryfr, wa-cityfrom,  42 '|', wa-countryto, wa-cityto, 69 '|'.
+      HIDE wa.
+    ENDLOOP.
+    ULINE /(69).
+    MESSAGE s000 WITH pa_carr.
+  ELSEIF sy-subrc = 5.
+    MESSAGE e001.
+  ELSEIF sy-subrc = 7.
+    WRITE 'Keine Berechtigung!'.
+    MESSAGE e002.
+  ENDIF.
+
+AT LINE-SELECTION.
+  " Verzweigungsebene 1
+  IF sy-lsind = 1.
+    " Mindestens Zeile 6 um Überschriften zu umgehen
+    IF sy-lilli > 5.
+      FORMAT COLOR 6.
+      WRITE: 'Einzelflüge zur Vwrbindung ', wa-carrid, wa-connid.
+      ULINE /(48).
+      WRITE: /'|Datum', 12 '|Flugzeugtyp', 24 '|Plätze', 36 '|Belegt', 48 '|'.
+      ULINE /(48).
+      FORMAT RESET.
+
+      DATA wa_sflight LIKE sflight.
+      SELECT * FROM sflight INTO wa_sflight
+        WHERE carrid = wa-carrid AND connid = wa-connid.
+        WRITE: / '|', wa_sflight-fldate,
+              12 '|', wa_sflight-planetype,
+              24 '|', wa_sflight-seatsmax,
+              36 '|', wa_sflight-seatsocc,
+              48 '|'.
+      ENDSELECT.
+      IF sy-subrc = 0.
+        MESSAGE s003 WITH wa-connid.
+      ELSE.
+        MESSAGE e002.
+      ENDIF.
+      ULINE /(48).
+    ENDIF.
+  ENDIF.

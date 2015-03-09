@@ -1,0 +1,81 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_CARS
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_cars.
+
+TYPES: BEGIN OF str_car,
+  hersteller(20) TYPE c,
+  typ(20) TYPE c,
+  ps TYPE i,
+  baujahr(4) TYPE n,
+  fgs(10) TYPE n,
+
+  tueren TYPE i,
+  ahk TYPE i,
+  rechtslenker(4) TYPE c,
+END OF str_car.
+
+TYPES tab_flotte TYPE STANDARD TABLE OF str_car WITH KEY fgs.
+
+DATA flotte TYPE tab_flotte.
+DATA auto TYPE str_car.
+
+auto-hersteller = 'Mercedes'.
+auto-typ = 'S-Klasse'.
+auto-ps = 150.
+auto-baujahr = '1990'.
+auto-fgs = '1234567890'.
+auto-tueren = 4.
+auto-ahk = 1000.
+auto-rechtslenker = 'Nein'.
+INSERT auto INTO TABLE flotte.
+
+auto-hersteller = 'Volkswagen'.
+auto-typ = 'Sharan'.
+auto-ps = 120.
+auto-baujahr = '2008'.
+auto-fgs = '2234567890'.
+auto-tueren = 5.
+auto-ahk = 1500.
+auto-rechtslenker = 'Nein'.
+INSERT auto INTO TABLE flotte.
+
+auto-hersteller = 'BMW'.
+auto-typ = '3er'.
+auto-ps = 250.
+auto-baujahr = '2013'.
+auto-fgs = '3334567830'.
+auto-tueren = 3.
+auto-ahk = 0.
+auto-rechtslenker = 'Nein'.
+INSERT auto INTO TABLE flotte.
+
+auto-hersteller = 'Opel'.
+auto-typ = 'Manta'.
+auto-ps = 200.
+auto-baujahr = '19850'.
+auto-fgs = '1234567390'.
+auto-tueren = 3.
+auto-ahk = 0.
+auto-rechtslenker = 'Ja'.
+INSERT auto INTO TABLE flotte.
+
+DELETE TABLE flotte WITH TABLE KEY fgs = '3334567830'.
+
+LOOP AT flotte INTO auto.
+  WRITE: / 'Tabellenindex: ', sy-tabix,
+  / 'Hersteller: ', auto-hersteller,
+   / 'Modell: ', auto-typ,
+   / 'Leistung: ', auto-ps,
+   / 'Baujahr: ', auto-baujahr,
+   / 'Fahrgestellnummer: ', auto-fgs,
+   / 'Türen: ', auto-tueren,
+   / 'Stützlast der Anhängerkupplung: ', auto-ahk,
+   / 'Rechtslenker: ', auto-rechtslenker,
+   / .
+ENDLOOP.

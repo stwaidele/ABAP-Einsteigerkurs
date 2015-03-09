@@ -1,0 +1,37 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_CALCULATOR
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_calculator.
+
+PARAMETERS: operand1 TYPE i,
+            operand2 TYPE i,
+            operator(1) TYPE c.
+
+DATA ergebnis TYPE i.
+
+CALL FUNCTION 'Z_1447_F_CALC'
+  EXPORTING
+    im_operand1      = operand1
+    im_operand2      = operand2
+    im_operator      = operator
+  IMPORTING
+    ex_ergebnis      = ergebnis
+  EXCEPTIONS
+    zero_division    = 1
+    invalid_operator = 2.
+
+CASE sy-subrc.
+  WHEN 0.
+    WRITE: operand1, ' ', operator, ' ', operand2, ' = ', ergebnis.
+  WHEN 1.
+    WRITE 'Division durch Null.'.
+  WHEN 2.
+    WRITE 'Keine gültige Rechenoperation angegeben.'.
+  WHEN OTHERS.
+    WRITE 'Unbekannter Fehler. :('.
+ENDCASE.

@@ -1,0 +1,32 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_KOPFZEILE
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZZ_1447_KOPFZEILE.
+
+TYPES:
+BEGIN OF str_zeile,
+beispiel TYPE i,
+beispiel2 TYPE i,
+END OF str_zeile.
+
+DATA: tab_modern TYPE STANDARD TABLE OF str_zeile,
+wa_modern TYPE str_zeile,
+tab_altmodisch TYPE STANDARD TABLE OF str_zeile WITH HEADER LINE.
+
+tab_altmodisch-beispiel = 1.
+tab_altmodisch-beispiel2 = 1.
+APPEND tab_altmodisch.
+tab_altmodisch-beispiel = 2.
+tab_altmodisch-beispiel2 = 2.
+APPEND tab_altmodisch.
+wa_modern-beispiel = 1.
+wa_modern-beispiel2 = 1.
+APPEND wa_modern TO tab_modern.
+wa_modern-beispiel = 2.
+wa_modern-beispiel2 = 2.
+APPEND wa_modern TO tab_modern.

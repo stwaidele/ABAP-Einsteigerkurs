@@ -1,0 +1,44 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_MWST
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_mwst2.
+
+PARAMETERS: netto TYPE p DECIMALS 2,
+  stsatz TYPE p DECIMALS 2.
+
+DATA brutto TYPE p DECIMALS 2.
+
+perform prozentaufschlag
+            using
+                netto
+                stsatz
+            changing
+                brutto.
+
+
+WRITE: 'Netto: ', netto, 'Steueresatz: ', stsatz, 'Brutto: ', brutto.
+
+
+*&---------------------------------------------------------------------*
+*&      Form  prozentaufschlag
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->VALUE(GRUNDBETRAG)  text
+*      -->VALUE(AUFSCHLAG)    text
+*      -->VALUE(ERGEBNIS)     text
+*----------------------------------------------------------------------*
+FORM prozentaufschlag
+  USING
+        value(grundbetrag) TYPE p
+        value(aufschlag) TYPE p
+  CHANGING
+        value(ergebnis) TYPE p.
+
+  ergebnis = grundbetrag * ( 1 + aufschlag / 100 ).
+ENDFORM.                    "prozentaufschlag

@@ -1,0 +1,31 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_HALLOWELT
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_hallowelt.
+
+INCLUDE <list>.
+
+WRITE 'Hello World'.
+NEW-LINE.
+WRITE 'Whats up'.
+NEW-LINE.
+WRITE 'Und noch wichtiger: Wie kann ich Apostrophe eingeben...?'.
+NEW-LINE.
+WRITE 'Ganz einfach, mit der Tastatur!'.
+NEW-LINE.
+WRITE sym_circle AS SYMBOL .
+
+data zp type t.
+zp = '123456'.
+write zp. new-line.
+write (8) zp. new-line.
+
+data dt type d.
+dt = '20150228'.
+write dt. new-line.
+write dt dd/mm/yy.

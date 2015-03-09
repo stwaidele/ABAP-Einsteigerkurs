@@ -1,0 +1,18 @@
+*&---------------------------------------------------------------------*
+*& Report  ZZ_1447_SQL
+*&
+*&---------------------------------------------------------------------*
+*&
+*&  ~
+*&---------------------------------------------------------------------*
+
+REPORT  zz_1447_sql.
+
+DATA wa TYPE spfli.
+
+SELECT cityfrom cityto fltime
+  FROM spfli
+  INTO (wa-cityfrom, wa-cityto, wa-FLTIME).
+
+  WRITE: / wa-cityfrom, wa-cityto,wa-fltime.
+ENDSELECT.
